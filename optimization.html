@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <style>
+  div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+  }
+  </style>
+</head>
+
+<body id="BackToTop">
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="course.html">Course & Research</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="publication.html">Project & Publication</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="forwardModel.html">Forward Model</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="optimization.html">Optimization</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="machineLearning.html">Machine Learning</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class = "sticky">
+          <ul>
+            <li><a href="#ConvexOptimizationProblem">Optimization Problem</a></li>
+            <li><a href="#Lagrangian">Lagrangian</a></li>
+            <li><a href="#GradientDescentMethod">Gradient Descent</a></li>
+            <li><a href="#ProximalGradientMethod">Proximal Gradient</a></li>
+            <li><a href="#ADMM">ADMM</a></li>
+            <li><a href="#References">References</a></li>
+            <li><a href="#BackToTop">Back To Top</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <div class="container p-3 my-3 border" id="ConvexOptimizationProblem">
+          <h1>Convex Optimization Problem</h1>
+          <h3>Standard Form</h3>
+          Convex Optimization Problem: Standard Form
+          <br>&nbsp &nbsp &nbsp &nbsp minimize \( f_0(x) \)
+          <br>&nbsp &nbsp &nbsp &nbsp subject to \( f_i(x) \le 0, i = 1,...,m \)
+          <br>where \( f_0(x),...,f_m((x) \) are convex functions.
+          <br>
+          <br>
+          <h3>Implicit Form</h3>
+          Convex Optimization Problem: Implicit Form
+          <br>&nbsp &nbsp &nbsp &nbsp minimize \( f(x) \)
+          <br>&nbsp &nbsp &nbsp &nbsp subject to \( x \in C \)
+          <br>where \( f(x) \) is a convex function and \( C \) is a convex set.
+        </div>
+
+        <div class="container p-3 my-3 border" id="Lagrangian">
+          <h1>Lagrangian</h1>
+          <p>
+          The Lagrangian for this optimization problem is
+          <br>\( L(x,\lambda) = f_0(x)+\sum\limits_{i=1}^{m}\lambda_i f_i(x) \)
+          <br>\(\lambda_1, \lambda_2, ... \lambda_m\) are called Lagrangian multipliers (also called the dual variables).
+          </p>
+          <h3>Primal Form</h3>
+          <p>
+          Original optimization problem in primal form:
+          <br>\(p^* = \inf\limits_{x} \sup\limits_{\lambda\ge 0} L(x,\lambda)\)
+          </p>
+          <h3>Dual Form</h3>
+          <p>
+          Get the Lagrangian dual problem by “swapping the inf and the sup”:
+          <br>\(d^* = \sup\limits_{\lambda\ge 0} \inf\limits_{x} L(x,\lambda)\)
+          <br>We can show weak duality: \(p^* \ge d^*\) for any optimization problem.
+          <br>For convex problems, we often have strong duality: \(p^* = d^*\).
+          <br>The Lagrangian dual function (or just dual function) is
+          <br>\(g(\lambda) = \inf\limits_{x} L(x,\lambda) = \inf\limits_{x}(f_0(x)+\sum\limits_{i=1}^{m}\lambda_i f_i(x))\)
+          <br>The Lagrangian dual problem is a search for best lower bound on \(p^*\):
+          <br>&nbsp &nbsp &nbsp &nbspmaximize \(g(\lambda)\)
+          <br>&nbsp &nbsp &nbsp &nbspsubject to \(\lambda \ge 0\)
+          <br>Lagrangian dual problem sometimes easier to solve (simpler constraints).
+          </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="GradientDescentMethod">
+          <h1>Gradient Descent Method</h1>
+          <p>Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable objective function \(f(x)\).
+          <br>The method is to find a local minimum by iteratively moving in the steepest descent direction \(\Delta x\) as defined by the negative gradient \(-\nabla f(x)\).
+          <br>\(x_{k+1} = x_k - t_k \nabla f(x_k)\)
+          <br>and \(f(x_{k+1}) < f(x_k)\) except when \(x_k\) is optimal.
+          <br>Here, k = 0, 1, ... denotes the iteration number. The scalar \(t_k \ge 0\) is called the step size or step length at iteration k.
+          <br>
+          <br>The outline of a general descent method is as follow:
+          <br>Given a starting point \(x_0 \in dom(f)\).
+          <br>Repeat
+          <br> &nbsp &nbsp &nbsp &nbsp 1. Determine a descent direction \(\Delta x\).
+          <br> &nbsp &nbsp &nbsp &nbsp 2. Line search. Choose a step size \(t > 0\).
+          <br> &nbsp &nbsp &nbsp &nbsp 3. Update. \(x = x + t\Delta x\).
+          <br>Until stopping criterion is satisfied.
+          <br> Step size t can be determined by backtracking line search or exact line serach.
+          </p>
+          <h3>Convergence Theorem for Fixed Step Size</h3>
+          <p>Suppose \(f:R^d \to R\) is convex and differentiable, and \(\nabla f\) is Lipschitz continuous with constant \(L > 0\),
+          <br> \(||\nabla f(x) - \nabla f(y)|| \le L||x-y||\)
+          <br> for any \(x, y \in R^d\). Then gradient descent with fixed step size \(t \le \frac{1}{L}\) converges.
+          <br> In particular, \(f(x^k) - f(x^*) \le \frac{||x^0-x^*||^2}{2tk}\)
+          </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="ProximalGradientMethod">
+          <h1>Proximal Gradient Method</h1>
+          <h3>Proximal Operator</h3>
+          <p>
+          proximal operator of \( f : R^n \rightarrow R \cup \{ +\infty \} \) is
+          <br>&nbsp &nbsp &nbsp &nbsp \(prox_{\lambda f}(v) = {\arg\min\limits_{x}}(f(x) + \frac{1}{2}\lambda||x-v||^2_2)\)
+          <br>with parameter \( \lambda > 0 \)
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>\(f\) may be nonsmooth, have embedded constraints, ...
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>evaluating \(prox_{f}\) involves solving a convex optimization problem
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>can evaluate via standard methods like BFGS, but very often has an analytical solution or simple specialized linear-time algorithm
+          </p>
+          <h3>Soft-thresholding Operator</h3>
+          <p> Soft-thresholding operator is one form of proximal operator. It's just the proximal mapping of the L1-norm.
+          <br>Let \(f(x)=||x||_1\), then the proximal mapping of \(f(x)\) is defined as
+          <br> &nbsp &nbsp &nbsp &nbsp \(prox_{\lambda f}(v) = {\arg\min\limits_{x}}(||x||_1 + \frac{1}{2}\lambda||x-v||^2_2)\)
+          <br> with parameter \(\lambda > 0\).
+          <br> Here \(f(x)=||x||_1\) is not differentiable, but we can have the following expression by using subgradient.
+          <br> <span style='font-size:20px; color:blue'>&#9656;</span> if \(x_i \ne 0\), then \(v_i - x_i = \lambda sign(x_i)\)
+          <br> <span style='font-size:20px; color:blue'>&#9656;</span> if \(x_i = 0\), then \( |v_i - x_i| \le \lambda \)
+          <br> Then we can have the following analytical solution.
+          <br> <span style='font-size:20px; color:blue'>&#9656;</span> if \(v_i > \lambda\), then \(x_i = v_i - \lambda\)
+          <br> <span style='font-size:20px; color:blue'>&#9656;</span> if \(-\lambda \le v_i \le \lambda \), then \(x_i = 0\)
+          <br> <span style='font-size:20px; color:blue'>&#9656;</span> if \(v_i < - \lambda\), then \(x_i = v_i + \lambda\)
+          </p>
+          <h3>Proximal Gradient</h3>
+          <p>
+          &nbsp &nbsp &nbsp &nbsp minimize \( f(x) + g(x) \)
+          <br>\(f\) is smooth
+          <br>\(g : R^n \rightarrow R \cup \{ +\infty \}\) is closed proper convex
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>method: \( x^{k+1} = prox_{\lambda^kg}(x^k-\lambda^k\nabla f(x^k)) \)
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>converges with rate \(O(1/k)\) when \(\nabla f\) is Lipschitz continuous with constant \(L\) and step sizes are \( \lambda^k=\lambda \in (0, 1/L] \)
+          <br><span style='font-size:20px; color:blue'>&#9656;</span>special case: projected gradient method (take \(g = I_C\))
+          </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="ADMM">
+          <h1>ADMM (Alternating Direction Method of Multipliers)</h1>
+          <h3>Unconstrained Minimization</h3>
+          <img src="admm1.png" width="500" height="310">
+          <br>
+          <br>
+          <h3>Constrained Minimization</h3>
+          <img src="admm2.png" width="500" height="260">
+          <br>
+          <br>
+          <h3>Scaled Dual Variables</h3>
+          <img src="admm3.png" width="500" height="270">
+        </div>
+        
+        <div class="container p-3 my-3 border" id="References">
+          <h1>References</h1>
+          <a href="http://cvxr.com/cvx/">CVX: Matlab Software for Disciplined Convex Programming</a>
+          <br>
+          <a href="https://www.cvxpy.org/">Convex Optimization in Python with CVXPY</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="course.html">Course & Research</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="publication.html">Project & Publication</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="forwardModel.html">Forward Model</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="optimization.html">Optimization</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="machineLearning.html">Machine Learning</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+
+  <div class="container p-3 my-3 border">
+    <h1>Joint Design of Hardware and Software</h1>
+    <h3>Imaging System Design</h3>
+    (a)<img src="stem1.jpg" width="250" height="200">
+    &nbsp;
+    &nbsp;
+    (b)<img src="cdi1.jpg" width="250" height="150">
+    <br>
+    (a) electron beam to probe specimen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(b) x-ray beam to investigate sample
+    <br>
+    <br>
+    <h3>Algorithm Design</h3>
+    <p>
+    Find \(x\)
+    <br>
+    such that \(Ax = y\) or \(|Ax|^2 = y\)
+    <br>
+    where \(x\) is object of interest, \(y\) is measurement, \(A\) represents forward model.
+    <br>
+    Solving such an equation system is usually formulated as solving an <a href="optimization.html">optimization</a> problem: \(f(x) = ||Ax - y||^2_2\) or \(f(x) = ||Ax - y||^2_2 + \lambda||x||_1\) or \(f(x) = ||Ax - y||^2_2 + \lambda TV(x)\) or other form of cost function.
+    <br>
+    <h3>Pipeline</h3>
+    Modify hardware design <span style='font-size:20px;'>&harr;</span> Data acquisition <span style='font-size:20px;'>&harr;</span> Modify algorithm design <span style='font-size:20px;'>&harr;</span> Result validation
+    <br>
+    Need to know the forward model \(A\). \(A\) may be an operarion or a combination of operations, including convolutuon, projection, Hadamard product, Fresnel propagation, Fourier transform and so on.
+    The forward model should be determined by the specific imaging system and the true underlying physical process.
+    </p>
+  </div>
+
+  <div class="container p-3 my-3 border">
+    <h1>Electron Interaction with Thick Specimen</h1>
+    <p>This section recaps the theory of calculating transmission electron microscope image of thick specimen (more than a few atoms thick),
+    including the effects of multiple (or plural) scattering. When the electron can scatter more than once as it passes through the specimen,
+    the scattering is said to be dynamical.
+    </p>
+    <p>The Schrodinger equation for the full wave function \(\Psi_f(x,y,z)\) as a function of
+    three spatial coordinates \((x,y,z)\) in an electrostatic potential \(V(x,y,z)\) of the specimen is as follows:
+    
+    $$[-\frac{\hbar^2}{2m}\nabla^2-eV(x,y,z)]\Psi_f(x,y,z)=E\Psi_f(x,y,z)$$
+    
+    The electron motion will be predominately in the forward z direction (along the optic axis of the microscope)
+    and the specimen will be a relatively minor perturbation on the electron's motion.
+    It is useful to separate the large velocity in the z direction from other small effects due to the specimen.
+
+    $$\Psi_f(x,y,z)=\Psi(x,y,z)\exp(\frac{2\pi iz}{\lambda})$$
+
+    After cancelling equal terms and dropping common factors, we can have the following equation:
+    
+    $$[\nabla^2_{xy} + \partial^2_z + \frac{4\pi i}{\lambda}\partial_z + \frac{2meV(x,y,z)}{\hbar^2}]\Psi(x,y,z)=0$$
+    
+    The motion of the high energy electrons is predominately in the forward z direction meaning that \(\Psi\) changes slowly with z and \(\lambda\) is very small.
+    So the above equation may be approximated as a first order differential equation in z:
+    
+    $$[\nabla^2_{xy} + \frac{4\pi i}{\lambda}\partial_z + \frac{2meV(x,y,z)}{\hbar^2}]\Psi(x,y,z)=0$$
+    
+    Given an initial value \(\Psi(x,y,z=z_0)\), the above equation then can be solved by numerical method (multislice or finite difference).
+    </p>
+  </div>
+
+  <div class="container p-3 my-3 border">
+    <h1>X-ray Interaction with Thick Specimen</h1>
+    <p>
+    If the X-ray photon can only scatter once when passing through the specimen, the scattering is said to be kinematical.
+    In X-ray Crystallography or X-ray Small Angle Scattering, kinematical scattering is utilized to investigate specimen's structure.
+    Although X-ray has relatively strong penetrating power, dynamical scattering also exists in X-ray diffraction of thick specimens.
+    </p>
+    <p>The Helmholtz equation for the full wave function \(\Psi_f(x,y,z)\) as a function of
+    three spatial coordinates \((x,y,z)\) in a complex refractive index \(n(x,y,z)\) of the specimen is as follows:
+    
+    $$[\nabla^2 + k^2n(x,y,z)^2]\Psi_f(x,y,z)=0, \space where \space n(x,y,z) = 1 - \delta(x,y,z) + i\beta(x,y,z)$$
+    
+    The term δ is the decrement of the real part of the refractive index, and the imaginary part β describes the absorption index or extinction coefficient.
+    When X-rays pass through a specimen, not only their amplitude but their phase is altered as well.
+    <br>
+    Likewise, it is useful to separate the large velocity in the z direction from other small effects due to the specimen.
+
+    $$\Psi_f(x,y,z)=\Psi(x,y,z)\exp(ikz)$$
+
+    After cancelling equal terms and dropping common factors, we can have the following equation:
+
+    $$[\nabla^2_{xy} + \partial^2_z + 2ik\partial_z + k^2(n^2-1)]\Psi(x,y,z)=0$$
+
+    In similar manner, the above Helmholtz equation may be approximated as a first order differential equation in z:
+
+    $$[\nabla^2_{xy} + 2ik\partial_z + k^2(n^2-1)]\Psi(x,y,z)=0$$
+
+    Given an initial value \(\Psi(x,y,z=z_0)\), the equation then can be solved by numerical method (multislice or finite difference).
+    <br>
+    <br>
+    In addition, if there is no specimen present, then the last term \(k^2(n^2-1)\) in the left-hand side (LHS) can be dropped
+    and the equation may be approximated as \([\nabla^2_{xy} + 2ik\partial_z]\Psi(x,y,z)=0\) representing the well-known Fresnel propagation of wave along the z direction in free-space .
+    <br>For the X-ray wavelength (or energy), if specimen is not too thick and accumulated propagation effect is small, then the first term \(\nabla^2_{xy}\) in the left-hand side (LHS) can be dropped
+    and the equation may be approximated as \([2ik\partial_z + k^2(n^2-1)]\Psi(x,y,z)=0\) representing the well-known projection (or line-integral) of specimen in the z direction.
+    </p>
+  </div>
+
+
+</body>
+
+</html>

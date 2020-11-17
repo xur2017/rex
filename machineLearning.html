@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+  div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+  }
+  </style>
+</head>
+
+<body id="BackToTop">
+
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="course.html">Course & Research</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="publication.html">Project & Publication</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="forwardModel.html">Forward Model</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="optimization.html">Optimization</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="machineLearning.html">Machine Learning</a>
+      </li>
+    </ul>
+  </nav>
+  <br>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+        <div class = "sticky">
+          <ul>
+            <li><a href="#NaiveBayesClassifier">Naive Bayes Classifier</a></li>
+            <li><a href="#LogisticRegression">Logistic Regression</a></li>
+            <li><a href="#SVM">SVM</a></li>
+            <li><a href="#PCA">PCA</a></li>
+            <li><a href="#CNN">CNN</a></li>
+            <li><a href="#References">References</a></li>
+            <li><a href="#BackToTop">Back To Top</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-10">
+        <div class="container p-3 my-3 border" id="NaiveBayesClassifier">
+          <h1>Naive Bayes Classifier</h1>
+          <p>
+          The naive conditional independence assumption: each feature is (conditionally) independent of every other feature, given the label.
+          <br>\( p(x|y) = p(x_1,x_2,...,x_d|y) = \prod\limits_{i=1}^{d}p(x_i|y) \)
+          <br>The <b>naive Bayes classifier</b>: the predicted label is given by
+          <br>\( \hat{y} = \arg\max\limits_{y} P(y) \prod\limits_{i=1}^{d} p(x_i|y) \)
+          <br>The <b>parameters of the classifier</b>:
+          <br>\( P(y) \)
+          <br>\( p(x_i|y) \) for all \( i,y \)
+          <br>
+          <br>\( x= \langle x_1, x_2, ..., x_d \rangle \) where each \(x_i\) can take only a finite number of values from \( \{v_1, v_2, ..., v_m\} \)
+          <br>In this case, the <b>parameters of the classifier</b> are
+          <br>\( P(y) \)
+          <br>\( p(x_i=v_k|y) \) for all \( i,k,y \)
+          <br>
+          <br>Given a training set of n labelled samples \( \langle x^i, y^i \rangle, i = 1,...,n \), how to estimate the model parameters?
+          <br>\( P(y) = \frac{\# \: of \: samples \: with \: label \: y}{n} \)
+          <br>\( p(x_i=v_k|y)=\frac{p(x_i=v_k,y)}{P(y)} = \frac{\# \: of \: samples \: with \: ith \: feature \: taking \: value \: v_k \: and \: label \: y}{\# \: of \: samples \: with \: label \: y} \)
+          </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="LogisticRegression">
+          <h1>Logistic Regression</h1>
+          <p>
+          The <b>logistic function</b>: \( \sigma(t) = \frac{1}{1+\exp(-t)} = \frac{\exp(t)}{1+\exp(t)} \)
+          <br>
+          <img src="logistic1.png" width="300" height="200">
+          <br>
+          <br><b>Logistic regression</b>: use the logistic function for modeling \(P(y|x)\), considering only the case of \(y \in \{0,1\}\)
+          <br>\( P(y=0|x) = \frac{1}{1+\exp(w_0+\sum_{i=1}^{d}w_ix_i)} = \frac{1}{1+\exp(w^tx)} = 1-\sigma(w^tx) \)
+          <br>\( P(y=1|x) = \frac{\exp(w_0+\sum_{i=1}^{d}w_ix_i)}{1+\exp(w_0+\sum_{i=1}^{d}w_ix_i)} = \frac{\exp(w^tx)}{1+\exp(w^tx)} = \sigma(w^tx) \)
+          <br>Given a sample x, we classify it as 0 (i.e., predicting y = 0) if 
+          <br>\( P(y=0|x) \ge P(y=1|x) \Rightarrow \frac{1}{1+\exp(w^tx)} \ge \frac{\exp(w^tx)}{1+\exp(w^tx)} \Rightarrow w^tx \le 0 \)
+          <br>Or we classify it as 1, if \( w^tx > 0 \)
+          <br>
+          <br>What are the model parameters in logistic regression?
+          <br>Given a parameter w, we have \( P(y|x) = \sigma(w^tx)^y(1-\sigma(w^tx)^{1-y}) \)
+          <br>
+          <br>Given n training samples, \( \langle x^i,y^i \rangle, i = 1, ..., n, \) how can we use them to estimate the parameters?
+          <br>For a given w, the probability of getting all those \( y^1, y^2, ..., y^n \) from the correponding data \( x^1, x^2, ..., x^n \) is
+          <br>\( L(w) = \prod_{i=1}^{n}P(y^i|x^i,w) = \prod_{i=1}^{n}\sigma(w^tx^i)^{y^i}(1-\sigma(w^tx^i)^{1-{y^i}}) \)
+          <br>\( l(w) = log(L(w)) = \sum_{i=1}^{n}log[\sigma(w^tx^i)^{y^i}(1-\sigma(w^tx^i)^{1-{y^i}}] = \sum_{i=1}^{n}[log(\sigma(w^tx^i)^{y^i}) + log((1-\sigma(w^tx^i)^{1-{y^i}})] \)
+          <br>
+          <br><b>Optimal parameters?</b>
+          <br>\( w^* = \arg\max\limits_{w} l(w) = \arg\max\limits_{w} \sum_{i=1}^{n} [y^iw^tx^i - log(1+\exp(w^tx^i))]  \)
+          <br>We can not really solve for \( w^* \) analytically (no closed-form solution), but we can use a commanly-used optimization technique, gradient descent/ascent, to find a solution.
+          </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="SVM">
+          <h1>SVM (Support Vector Machine)</h1>
+          <p>
+          <h3>Formulating the Margin</h3>
+          We can have the canonical formulation for the three planes as
+          <br>\( H: w^t x + b = 0 \)
+          <br>\( H_1: w^t x + b = +1 \)
+          <br>\( H_2: w^t x + b = -1 \)
+          <br> The region between \( H_1 \) and \( H_2 \) is also called the margin, and its width is \( \frac{2}{||w||} \)
+          <br>
+          <img src="svm1.png" width="300" height="290">
+          <br>
+          <br>
+          <h3>Formulating SVM</h3>
+          \( \{ w^*,b^* \} = \arg\min\limits_{w,b}\frac{1}{2}||w||^2 \)
+          <br>subject to 
+          <br>\( w^tx^i + b \ge +1 \) for \( y^i = +1 \)
+          <br>\( w^tx^i + b \le -1 \) for \( y^i = -1 \)
+          <br>The constraints can be combined into:
+          <br>\( y^i(w^t x^i + b) - 1 \ge 0 \)
+          <br> A nonlinear (quadratic) optimization problem with linear inequality constraints.
+          <h3>Reformulating using Lagrangian multipliers</h3>
+          <b>Lagrangian Primal Form</b>
+          <br> \( L_P(w,b,\alpha) = \frac{1}{2}||w||^2 - \sum\limits_{i} \alpha_i[y^i(w^tx^i+b)-1] \)
+          <br> then the SVM solution should satisfy
+          <br> \( \frac{\partial L_P}{\partial w} = 0, \frac{\partial L_P}{\partial b} = 0, \alpha_i \ge 0, \alpha_i[y^i(w^tx^i+b)-1] = 0 \)
+          <br> The final w is given by \( w = \sum\limits_{i} \alpha_i y^i x^i \) and b is given by \( y^k - w^t x^k \) for any k such that \( \alpha_k > 0 \)
+          <br> <b>Lagrangian Dual Form</b>
+          <br> \( L_D(w,b,\alpha) = \sum\limits_{i} \alpha_i - \frac{1}{2}\sum\limits_{i,j} \alpha_i \alpha_j y^i y^j \langle x^i,x^j \rangle, \) where \(\langle x^i,x^j \rangle\) means inner product.
+          <br> The solution is the same as before. But there is an important observation.
+          <br> Points for which \( \alpha_i > 0 \) are called support vectors.
+          </p>
+        </div>
+        
+        <div class="container p-3 my-3 border" id="PCA">
+          <h1>PCA (Principal Component Analysis)</h1>
+          <p>
+          The problem is to <b>find the direction of the largest variance</b>.
+          <br> Given n samples \( D=\{x_1,x_2,...,x_n\} \) in d-dimensional space, 
+          find a direction \( e_1 \), such that the projection of \( D \) onto \( e_1 \) gives
+          the largest variance (compared with any other direction).
+          \( e_1 \) is a d-dimensional vector with unit norm.
+          <br> The mean of the projections: \( \bar{y} = \frac{1}{n} \sum\limits_{i=1}^{n} y_i = \frac{1}{n} \sum\limits_{i=1}^{n} \langle x_i,e \rangle = \langle \bar{x},e \rangle \)
+          <br> The variance of the projections: \( \sigma^2 = \frac{1}{n} \sum\limits_{i=1}^{n} (y_i-\bar{y})^2 = \frac{1}{n} \sum\limits_{i=1}^{n} [\langle x_i-\bar{x},e \rangle]^2 \) 
+          <br> Expand the previous expression
+          <br> \( \sigma^2 = \sum\limits_{j=1}^{d} \sum\limits_{k=1}^{d} e_j e_k [ \frac{1}{n} \sum\limits_{i=1}^{n} (x_{i,j}-\bar{x}_j) (x_{i,k}-\bar{x}_k) ] = \sum\limits_{j=1}^{d} \sum\limits_{k=1}^{d} e_j e_k C_{jk} = e^t C e \)
+          <br> <b>C is the sample covariance matrix</b>.
+          <br> To find \( e_1 \), we can do
+          <br> \( e_1 = \arg\max\limits_{e} \sigma^2 = e^t C e \) subject to \( ||e|| = 1 \)
+          <br> Constrained maximization: use Lagrangian multiplier method.
+          <br> maximize \( F(e) = e^t C e - \lambda (e^t e - 1) \)
+          <br> Set the partial derivative to 0, we have
+          <br> \( \frac{\partial F}{\partial e} = 2 C e - 2 \lambda e = 0 \)
+          <br> \( C e = \lambda e \)
+          <br> The solution is an eigenvector of \( C \), with eigenvalue \( \lambda \), which is also the variance under \( e \):
+          <br> \( \sigma^2 = e^t C e = \lambda \)
+          <br> We should set \( e_1 \) to be the eigenvector correponding to the largest eigenvalue \( \lambda_1 \)
+        </p>
+        </div>
+
+        <div class="container p-3 my-3 border" id="CNN">
+          <h1>CNN (Convolutional Neural Network)</h1>
+          <p>
+          <b>Image Filtering via Convolution: Kernel</b>
+          <br> By varying kernel's coefficients, we can achieve different goals - smoothing, sharpening, detecting edges, etc.
+          <br> Better yet: can we learn proper kernels? Part of CNN's objective
+          <br>
+          <br>
+          <img src="cnn1.png" width="600" height="230">
+          <br> Some convpool layers plus some fully-connected layers
+          <br> (convpool layer: convolution, pooling, activation)
+<pre>
+<b>Neural Network Definition Example:</b>
+class Net:
+    def __init__(self):<span style="color:blue">
+        # input: 28x28
+        # output: 1x4 (only a subset, containing 4 classes, of the MNIST will be used)
+        # conv1:  {(28-5+0x0)/2+1} -> (12x12x6) (output size of convolutional layer)
+        # maxpool2: {(12-2)/2+1} -> (6x6)x6 (output size of pooling layer)
+        # fc3: 216 -> 32
+        # fc4: 32 -> 4
+        # softmax: 4 -> 4</span>
+        lr = 0.001
+        self.layers = []
+        self.layers.append(Convolution2D(inputs_channel=1, num_filters=6, kernel_size=5, padding=0, stride=2, learning_rate=lr, name='conv1'))
+        self.layers.append(ReLu())
+        self.layers.append(Maxpooling2D(pool_size=2, stride=2, name='maxpool2'))
+        self.layers.append(Flatten())
+        self.layers.append(FullyConnected(num_inputs=6*6*6, num_outputs=32, learning_rate=lr, name='fc3'))
+        self.layers.append(ReLu())
+        self.layers.append(FullyConnected(num_inputs=32, num_outputs=4, learning_rate=lr, name='fc4'))
+        self.layers.append(Softmax())
+        self.lay_num = len(self.layers)
+</pre>  
+        </p>  
+        </div>
+
+        <div class="container p-3 my-3 border" id="References">
+          <h1>References</h1>
+          <a href="https://scikit-learn.org/stable/">Scikit-learn: Machine Learning in Python</a>
+          <br>
+          <a href="https://pytorch.org/">PyTorch: Deep Learning in Python</a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
